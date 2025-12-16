@@ -5,6 +5,11 @@ console.log("Script loaded");
 ========================= */
 const fileInput = document.getElementById("files");
 const generateBtn = document.getElementById("generateBtn");
+
+if (!generateBtn) {
+  alert("Generate button not found!");
+}
+
 const tableBody = document.querySelector("#metadataTable tbody");
 
 /* =========================
@@ -73,4 +78,5 @@ function detectStyle(words) {
   if (words.includes("line")) return "Minimal line art";
   if (words.includes("flat")) return "Flat style";
   if (words.includes("cartoon")) return "Cartoon st
+
 
