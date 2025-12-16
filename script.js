@@ -79,6 +79,27 @@ function buildKeywords(words, style) {
   return unique.join(", ");
 }
 
+function epsCheck(file) {
+  let warnings = [];
+
+  if (file.name.toLowerCase().includes("cmyk")) {
+    warnings.push("⚠ CMYK detected – use RGB");
+  }
+
+  if (file.name.toLowerCase().includes("photo") || file.size > 15_000_000) {
+    warnings.push("⚠ Possible raster / embedded image");
+  }
+
+  warnings.push("ℹ Outline all text (Type → Create Outlines)");
+  warnings.push("ℹ Expand appearance before export");
+
+  if (warnings.length === 0) {
+    return "✅ Clean";
+  }
+
+  return warnings.join("<br>");
+}
+
 /* =========================
    UTILITIES
 ========================= */
@@ -105,3 +126,4 @@ function copy(btn) {
   document.execCommand("copy");
   alert("Copied!");
 }
+
