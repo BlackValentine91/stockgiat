@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StockGiat.com – Metadata Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 class="logo">Stock<span>Giat</span></h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="box">
+  <h2>Upload Files (Max 50)</h2>
+  <input type="file" multiple accept=".eps,.jpg,.jpeg">
+</section>
+
+<section class="box">
+  <h2>Metadata Generator</h2>
+
+  <label>Title (Max 200 characters)</label>
+  <input type="text" id="title" maxlength="200">
+  <button onclick="copyText('title')">Copy</button>
+
+  <label>Description</label>
+  <textarea id="description"></textarea>
+  <button onclick="copyText('description')">Copy</button>
+
+  <label>Keywords (7–50, comma separated)</label>
+  <textarea id="keywords"></textarea>
+  <button onclick="copyText('keywords')">Copy</button>
+
+  <button class="generate" onclick="generateSample()">Generate Sample</button>
+</section>
+
+<footer>
+  © 2025 StockGiat.com
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
