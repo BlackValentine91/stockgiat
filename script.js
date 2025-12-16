@@ -5,27 +5,28 @@ fileInput.addEventListener("change", () => {
   tableBody.innerHTML = "";
   const files = Array.from(fileInput.files).slice(0, 50);
 
-  files.forEach(file => {
-    const meta = generateAI(file.name);
+files.forEach(file => {
+  const meta = generateAI(file.name);
+  const status = epsCheck(file);
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${file.name}</td>
-      <td>
-        <input type="text" maxlength="200" value="${meta.title}">
-        <button onclick="copy(this)">Copy</button>
-      </td>
-      <td>
-        <textarea>${meta.description}</textarea>
-        <button onclick="copy(this)">Copy</button>
-      </td>
-      <td>
-        <textarea>${meta.keywords}</textarea>
-        <button onclick="copy(this)">Copy</button>
-      </td>
-    `;
-    tableBody.appendChild(row);
-  });
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${file.name}</td>
+    <td class="status">${status}</td>
+    <td>
+      <input value="${meta.title}" maxlength="200">
+      <button onclick="copy(this)">Copy</button>
+    </td>
+    <td>
+      <textarea>${meta.description}</textarea>
+      <button onclick="copy(this)">Copy</button>
+    </td>
+    <td>
+      <textarea>${meta.keywords}</textarea>
+      <button onclick="copy(this)">Copy</button>
+    </td>
+  `;
+  tableBody.appendChild(row);
 });
 
 /* =========================
@@ -126,4 +127,5 @@ function copy(btn) {
   document.execCommand("copy");
   alert("Copied!");
 }
+
 
