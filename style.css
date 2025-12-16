@@ -89,3 +89,23 @@ td button {
 .status:has(⚠) {
   color: red;
 }
+
+.actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  background: #0db14b;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #09963f;
+}
