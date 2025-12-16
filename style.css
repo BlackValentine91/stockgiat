@@ -80,3 +80,12 @@ td button {
   margin-top: 5px;
   width: 100%;
 }
+
+.status {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.status:has(⚠) {
+  color: red;
+}
