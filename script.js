@@ -3,39 +3,100 @@ const tableBody = document.querySelector("#metadataTable tbody");
 
 fileInput.addEventListener("change", () => {
   tableBody.innerHTML = "";
-
   const files = Array.from(fileInput.files).slice(0, 50);
 
-  files.forEach((file) => {
-    const row = document.createElement("tr");
+  files.forEach(file => {
+    const meta = generateAI(file.name);
 
+    const row = document.createElement("tr");
     row.innerHTML = `
       <td>${file.name}</td>
       <td>
-        <input type="text" maxlength="200"
-        value="Vector illustration of ${cleanName(file.name)}">
+        <input type="text" maxlength="200" value="${meta.title}">
         <button onclick="copy(this)">Copy</button>
       </td>
       <td>
-        <textarea>
-High quality vector illustration suitable for branding, design projects, and microstock usage.
-        </textarea>
+        <textarea>${meta.description}</textarea>
         <button onclick="copy(this)">Copy</button>
       </td>
       <td>
-        <textarea>
-vector, illustration, design, graphic, creative, digital, artwork
-        </textarea>
+        <textarea>${meta.keywords}</textarea>
         <button onclick="copy(this)">Copy</button>
       </td>
     `;
-
     tableBody.appendChild(row);
   });
 });
 
+/* =========================
+   AI HEURISTIC ENGINE
+========================= */
+
+function generateAI(filename) {
+  const name = cleanName(filename);
+  const words = name.split(" ");
+
+  const object = words[0] || "vector illustration";
+  const style = detectStyle(words);
+  const usage = "for branding, design projects, and microstock use";
+
+  const title = limit(
+    capitalize(`${style} ${object} vector illustration`),
+    200
+  );
+
+  const description =
+    `High quality ${style.toLowerCase()} ${object.toLowerCase()} vector illustration, suitable ${usage}.`;
+
+  const keywords = buildKeywords(words, style);
+
+  return { title, description, keywords };
+}
+
+function detectStyle(words) {
+  if (words.includes("line")) return "Minimal line art";
+  if (words.includes("flat")) return "Flat style";
+  if (words.includes("cartoon")) return "Cartoon style";
+  return "Clean modern";
+}
+
+function buildKeywords(words, style) {
+  const base = [
+    ...words,
+    "vector",
+    "illustration",
+    "design",
+    "graphic",
+    "creative",
+    "digital",
+    "artwork",
+    style.toLowerCase(),
+    "isolated",
+    "white background"
+  ];
+
+  const unique = [...new Set(base)].slice(0, 50);
+  return unique.join(", ");
+}
+
+/* =========================
+   UTILITIES
+========================= */
+
 function cleanName(name) {
-  return name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+  return name
+    .replace(/\.[^/.]+$/, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\d+/g, "")
+    .toLowerCase();
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function limit(text, max) {
+  return text.length > max ? text.slice(0, max - 3) + "..." : text;
 }
 
 function copy(btn) {
