@@ -1,3 +1,5 @@
+console.log("Script loaded");
+
 /* =========================
    ELEMENTS
 ========================= */
@@ -71,3 +73,4 @@ function detectStyle(words) {
   if (words.includes("line")) return "Minimal line art";
   if (words.includes("flat")) return "Flat style";
   if (words.includes("cartoon")) return "Cartoon st
+
